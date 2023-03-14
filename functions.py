@@ -1,6 +1,6 @@
 from smartapi import SmartConnect
 import pyotp
-import credentials
+from krishna import credentials
 import requests
 import pandas as pd
 
