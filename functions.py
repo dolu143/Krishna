@@ -62,16 +62,16 @@ def place_order(token,symbol,qty,exch_seg,buy_sell,ordertype,price):
         print("Order placement failed: {}".format(e.message))
 
 #Historic api
-def fetch_histcandle(exch_seg,token,timeframe,fromdate,todate):
+def histcand(exch_seg,token,timeframe,fromdate,todate):
     try:
-      historicParam={
-      "exchange": exch_seg,
-      "symboltoken": token,
-      "interval": timeframe,
-      "fromdate": fromdate, 
-      "todate": todate
-      }
-    data = obj.getCandleData(historicParam)
-    print(data)
+          historicParam={
+          "exchange": exch_seg,
+          "symboltoken": token,
+          "interval": timeframe,
+          "fromdate": fromdate, 
+          "todate": todate
+          }
+        data = obj.getCandleData(historicParam)
+        print(data)
     except Exception as e:
       print("Historic Api failed: {}".format(e.message))
