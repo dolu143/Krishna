@@ -62,7 +62,7 @@ def place_order(token,symbol,qty,exch_seg,buy_sell,ordertype,price):
         print("Order placement failed: {}".format(e.message))
 
 #Historic api
-def fetch_histcandle(exch_seg,token,timeframe,fromdate,todate)
+def fetch_histcandle(exch_seg,token,timeframe,fromdate,todate):
     try:
       historicParam={
       "exchange": exch_seg,
