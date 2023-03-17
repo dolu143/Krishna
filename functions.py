@@ -75,3 +75,19 @@ def histcand(exch_seg,token,timeframe,fromdate,todate):
         return data
     except Exception as e:
       print("Historic Api failed: {}".format(e.message))
+def write_toxl(hist_candata):
+    columns = ["time", "o","h","l","c","v"]
+    hist_candata = pd.DataFrame(hist_candata["data"], columns = columns)
+    hist_candata["time"] = pd.to_datetime(hist_candata["time"], format="%Y-%m-%dT%H:%M:%S")
+    print(hist_candata)
+    wb = xw.Workbook("C:\\Users\\pushp\\source\\repos\\Radha\\PythonApplication1\\Nifty.xlsx", {'remove_timezone': True})
+    wb1 = wb.add_worksheet("NIFTY")
+    wb1.write_row(0,0,columns)
+    format1 = wb.add_format({'num_format': 'dd/mm/yy hh:mm'})                                   
+    wb1.write_column(1,0, hist_candata['time'], format1)
+    wb1.write_column(1,1, hist_candata['o'])
+    wb1.write_column(1,2, hist_candata['h'])
+    wb1.write_column(1,3, hist_candata['l'])
+    wb1.write_column(1,4, hist_candata['c'])
+    wb1.write_column(1,5, hist_candata['v'])
+    wb.close()
