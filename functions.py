@@ -82,6 +82,8 @@ def write_toxl(hist_candata):
     hist_candata = pd.DataFrame(hist_candata["data"], columns = columns)
     hist_candata["time"] = pd.to_datetime(hist_candata["time"], format="%Y-%m-%dT%H:%M:%S")
     print(hist_candata)
+    string_time = strftime(hist_candata["time"])
+    print(string_time)
     wb = xw.Workbook("//content//Krishna//Nifty.xlsx", {'remove_timezone': True})
     wb1 = wb.add_worksheet("NIFTY")
     wb1.write_row(0,0,columns)
