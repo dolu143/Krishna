@@ -85,7 +85,7 @@ def fetch_onemin_oneday(exch_seg,token,date):
     month = fromdate[5:7]
     year = fromdate[0:4]
     todate = datetime.datetime(int(year),int(month),int(day),15,29)
-    todate = todate.strftime(%Y-%m-%d %H:%M)
+    todate = todate.strftime("%Y-%m-%d %H:%M")
     histdata = histcandle(exch_seg,token,timeframe,fromdate,todate)
     return histdata
 
