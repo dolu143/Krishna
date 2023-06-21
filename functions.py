@@ -79,13 +79,14 @@ def histcandle(exch_seg,token,timeframe,fromdate,todate):
       print("Historic Api failed: {}".format(e.message))
     
 def fetch_onemin_oneday(exch_seg,token,date):
-    timeframe= 'ONE MINUTE'
+    timeframe= 'ONE_MINUTE'
     fromdate= date
     day = fromdate[8:10]
     month = fromdate[5:7]
     year = fromdate[0:4]
     todate = datetime.datetime(int(year),int(month),int(day),15,29)
-    todate = todate.strftime("%Y-%m-%d %H:%M")
+    todate = todate.strftime('%Y-%m-%d %H:%M')
+    #todate = year+'-'+month+'-'+day+' '+'15:29'
     histdata = histcandle(exch_seg,token,timeframe,fromdate,todate)
     return histdata
 
