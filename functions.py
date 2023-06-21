@@ -4,6 +4,7 @@ from Krishna import credentials
 import requests
 import pandas as pd
 import xlsxwriter as xw
+import datetime
 
 def intializeSymbolTokenMap():
     url = 'https://margincalculator.angelbroking.com/OpenAPI_File/files/OpenAPIScripMaster.json'
@@ -83,7 +84,8 @@ def fetch_onemin_oneday(exch_seg,token,date):
     day = fromdate[8:10]
     month = fromdate[5:7]
     year = fromdate[0:4]
-    todate = date.datetime(int(year),int(month),int(day),15,29)
+    todate = datetime.datetime(int(year),int(month),int(day),15,29)
+    todate = todate.strftime('%Y-%m-%d %H:%M')
     histdata = histcandle(exch_seg,token,timeframe,fromdate,todate)
     return histdata
 
