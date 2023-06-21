@@ -63,7 +63,7 @@ def place_order(token,symbol,qty,exch_seg,buy_sell,ordertype,price):
         print("Order placement failed: {}".format(e.message))
 
 #Historic api
-def histcand(exch_seg,token,timeframe,fromdate,todate):
+def histcandle(exch_seg,token,timeframe,fromdate,todate):
     try:
         historicParam={
           "exchange": exch_seg,
@@ -77,13 +77,23 @@ def histcand(exch_seg,token,timeframe,fromdate,todate):
     except Exception as e:
       print("Historic Api failed: {}".format(e.message))
     
-def write_toxl(hist_candata):
+def fetch_onemin_oneday(exch_seg,token,date):
+    timeframe= 'ONE MINUTE'
+    fromdate= date
+    day = fromdate[8:10]
+    month = fromdate[5:7]
+    year = fromdate[0:4]
+    todate = date.datetime(int(year),int(month),int(day),15,29)
+    histdata = histcandle(exch_seg,token,timeframe,fromdate,todate)
+    return histdata
+
+def write_toxl(exch_seg,token,timeframe,fromdate,todate):
     columns = ["time", "o","h","l","c","v"]
+    date = fromdate
+    fetch_onemin_oneday(exch_seg,token,date)
     hist_candata = pd.DataFrame(hist_candata["data"], columns = columns)
     hist_candata["time"] = pd.to_datetime(hist_candata["time"], format="%Y-%m-%dT%H:%M:%S")
     print(hist_candata)
-    string_time = strftime(hist_candata["time"])
-    print(string_time)
     wb = xw.Workbook("//content//Krishna//Nifty.xlsx", {'remove_timezone': True})
     wb1 = wb.add_worksheet("NIFTY")
     wb1.write_row(0,0,columns)
