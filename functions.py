@@ -85,25 +85,25 @@ def fetch_onemin_oneday(exch_seg,token,date):
     month = fromdate[5:7]
     year = fromdate[0:4]
     todate = datetime.datetime(int(year),int(month),int(day),15,29)
-    todate = todate.strftime('%Y-%m-%d %H:%M')
+    todate = todate.strftime(%Y-%m-%d %H:%M)
     histdata = histcandle(exch_seg,token,timeframe,fromdate,todate)
     return histdata
 
 def write_toxl(exch_seg,token,timeframe,fromdate,todate):
     columns = ["time", "o","h","l","c","v"]
     date = fromdate
-    fetch_onemin_oneday(exch_seg,token,date)
-    hist_candata = pd.DataFrame(hist_candata["data"], columns = columns)
-    hist_candata["time"] = pd.to_datetime(hist_candata["time"], format="%Y-%m-%dT%H:%M:%S")
-    print(hist_candata)
+    histdata = fetch_onemin_oneday(exch_seg,token,date)
+    histdata = pd.DataFrame(histdata["data"], columns = columns)
+    histdata["time"] = pd.to_datetime(histdata["time"], format="%Y-%m-%dT%H:%M:%S")
+    print(histdata)
     wb = xw.Workbook("//content//Krishna//Nifty.xlsx", {'remove_timezone': True})
     wb1 = wb.add_worksheet("NIFTY")
     wb1.write_row(0,0,columns)
     format1 = wb.add_format({'num_format': 'dd/mm/yy hh:mm'})                                   
-    wb1.write_column(1,0, hist_candata['time'], format1)
-    wb1.write_column(1,1, hist_candata['o'])
-    wb1.write_column(1,2, hist_candata['h'])
-    wb1.write_column(1,3, hist_candata['l'])
-    wb1.write_column(1,4, hist_candata['c'])
-    wb1.write_column(1,5, hist_candata['v'])
+    wb1.write_column(1,0, histdata['time'], format1)
+    wb1.write_column(1,1, histdata['o'])
+    wb1.write_column(1,2, histdata['h'])
+    wb1.write_column(1,3, histdata['l'])
+    wb1.write_column(1,4, histdata['c'])
+    wb1.write_column(1,5, histdata['v'])
     wb.close()
